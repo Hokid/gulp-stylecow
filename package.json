@@ -28,7 +28,7 @@
     "gulpplugin"
   ],
   "dependencies": {
-    "stylecow": "4.*",
+    "stylecow": "6.*",
     "through2": "^0.6.1",
     "gulp-util": "^3.0.0",
     "vinyl-sourcemaps-apply": "^0.1.3"

@@ -29,18 +29,19 @@ module.exports = function (config) {
 
     stylecow.cwd(path.dirname(file.path));
 
-    try {
-      var css = stylecow.Root.create(new stylecow.Reader(file.contents.toString('utf8')), file.relative);
-    } catch (err) {
-      return cb(new PluginError('gulp-stylecow', err));
-    }
+    var css = stylecow.parseFile(file.path);
+      
+    stylecow.run(css);
 
-    var code = new stylecow.Code(css, {
-      file: file.relative,
-      style: config.code,
-      previousSourceMap: file.sourceMap,
-      sourceMap: file.sourceMap ? true : false
+    var code = new stylecow.Coder(css, {
+      sourceMap: file.map,
+      file: file.output,
+      style: config.code
     });
+
+    if (file.output) {
+      code.save();
+    }
 
     if (code.map && file.sourceMap) {
       code.map.file = file.sourceMap.file;
